@@ -1,6 +1,6 @@
 /* Service worker for the Deutsch-Diagnose app.
    Bump CACHE when you change index.html so phones pick up the new version. */
-const CACHE = 'diagnose-v2';
+const CACHE = 'diagnose-v3';
 
 const PRECACHE = [
   './',

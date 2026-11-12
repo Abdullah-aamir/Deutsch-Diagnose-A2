@@ -99,6 +99,7 @@
   <p>
     <button class="primary" id="go">Test starten</button>
     <button id="resume" hidden>Fortsetzen</button>
+    <button id="install" hidden>Als App installieren</button>
   </p>
   <p class="meta" id="resumeInfo" hidden></p>
 </section>
@@ -416,6 +417,23 @@ show('start');
 if ('serviceWorker' in navigator){
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
+
+/* Chrome bietet das Installieren auch im ⋮-Menü an; dieser Knopf macht es sichtbar.
+   Er erscheint nur, wenn der Browser die Seite wirklich für installierbar hält. */
+let installPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  installPrompt = e;
+  $('install').hidden = false;
+});
+$('install').addEventListener('click', async () => {
+  if (!installPrompt) return;
+  $('install').hidden = true;
+  installPrompt.prompt();
+  await installPrompt.userChoice;
+  installPrompt = null;
+});
+window.addEventListener('appinstalled', () => { $('install').hidden = true; installPrompt = null; });
 </script>
 </body>
 </html>

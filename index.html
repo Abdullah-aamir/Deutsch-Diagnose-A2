@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#2f55a4">
+<meta name="application-name" content="Deutsch-Diagnose">
+<meta name="description" content="100 Fragen, die zeigen, welche Grammatikbereiche eingerostet sind.">
+<title>Deutsch-Diagnose — 100 Fragen</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#fbf9f4; --ink:#1f2630; --rule:#d9d2c4;
+    --blue:#2f55a4; --blue-soft:#eaf0fb;
+    --green:#1f7a4d; --amber:#9a6a12; --red:#b3331f;
+    --muted:#6d6457;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:'EB Garamond',Georgia,serif; font-size:19px; line-height:1.6;
+    padding:calc(22px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right))
+            calc(40px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-left));
+    -webkit-text-size-adjust:100%;
+  }
+  .sheet{
+    max-width:700px;margin:0 auto;background:#fff;border:1px solid var(--rule);border-radius:4px;
+    box-shadow:0 1px 0 rgba(0,0,0,.04),0 18px 40px -28px rgba(0,0,0,.35);
+    padding:30px 32px 34px;
+  }
+  h1{font-size:26px;margin:0;font-weight:600;line-height:1.25}
+  h2{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.08em;
+     text-transform:uppercase;color:var(--muted);margin:26px 0 10px}
+  .lede{font-size:18px;color:#413a30;margin:12px 0 0}
+  .meta{font-family:Inter,sans-serif;font-size:12.5px;color:var(--muted)}
+  hr{border:none;border-top:1px solid var(--rule);margin:22px 0}
+  [hidden]{display:none !important}
+
+  button{
+    font-family:Inter,sans-serif;font-size:14px;font-weight:500;
+    border:1px solid var(--rule);background:#fff;color:var(--ink);
+    padding:9px 16px;border-radius:999px;cursor:pointer;transition:background .14s,border-color .14s;
+  }
+  button:hover:not(:disabled){background:#f4f1ea;border-color:#c3baa8}
+  button:disabled{opacity:.4;cursor:default}
+  button.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+  button.primary:hover{background:#27478c;border-color:#27478c}
+  button.small{font-size:12.5px;padding:6px 12px}
+
+  .top{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .count{font-family:Inter,sans-serif;font-size:12.5px;font-weight:500;color:var(--muted);white-space:nowrap}
+  .track{flex:1;height:6px;background:#eee8dc;border-radius:99px;overflow:hidden}
+  .fill{display:block;height:100%;width:0;background:var(--blue);border-radius:99px;transition:width .25s}
+  .qtext{font-size:23px;line-height:1.5;margin:26px 0 6px}
+  .blank{display:inline-block;min-width:92px;border-bottom:2px solid var(--blue)}
+  .hintw{font-family:Inter,sans-serif;font-size:13px;color:var(--muted);margin-bottom:20px}
+  .opts{display:grid;gap:9px;margin-bottom:20px}
+  .opt{
+    font-family:Inter,sans-serif;font-size:15.5px;text-align:left;padding:13px 15px;
+    border-radius:8px;border:1px solid var(--rule);background:#fdfcf9;line-height:1.35;
+  }
+  .opt .k{display:inline-block;width:19px;color:var(--muted);font-size:12.5px;font-weight:600}
+  .opt.sel{border-color:var(--blue);background:var(--blue-soft)}
+
+  .big{font-size:40px;font-weight:600;line-height:1;font-family:Inter,sans-serif}
+  .cat{display:grid;grid-template-columns:1fr auto;gap:4px 14px;padding:11px 0;border-bottom:1px dotted var(--rule)}
+  .cat .nm{font-size:18px}
+  .cat .nm small{font-family:Inter,sans-serif;font-size:12px;color:var(--muted);display:block}
+  .cat .sc{font-family:Inter,sans-serif;font-size:13px;font-weight:600;white-space:nowrap;align-self:center}
+  .cat .bar{grid-column:1/-1;height:5px;background:#eee8dc;border-radius:99px;overflow:hidden}
+  .cat .bar i{display:block;height:100%;border-radius:99px}
+  .rusty .sc{color:var(--red)} .rusty .bar i{background:var(--red)}
+  .shaky .sc{color:var(--amber)} .shaky .bar i{background:var(--amber)}
+  .solid .sc{color:var(--green)} .solid .bar i{background:var(--green)}
+
+  @media (max-width:620px){
+    body{padding:12px 10px 34px;font-size:18px}
+    .sheet{padding:20px 16px 24px}
+    h1{font-size:22px} .qtext{font-size:20px}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<section id="start">
+  <h1>Deutsch-Diagnose</h1>
+  <p class="lede">100 Fragen zu der Grammatik, die zwischen A2 und B1 am ehesten einrostet. Am Ende siehst du, welche Bereiche sitzen und welche nicht. Mehr macht der Test nicht.</p>
+  <hr>
+  <p class="meta">16 Bereiche · etwa 20 Minuten · Rückmeldung erst am Ende</p>
+  <p>
+    <button class="primary" id="go">Test starten</button>
+    <button id="resume" hidden>Fortsetzen</button>
+  </p>
+  <p class="meta" id="resumeInfo" hidden></p>
+</section>
+
+<section id="quiz" hidden>
+  <div class="top">
+    <span class="count" id="count"></span>
+    <span class="track"><span class="fill" id="qfill"></span></span>
+  </div>
+  <div class="qtext" id="qtext"></div>
+  <div class="hintw" id="qhint"></div>
+  <div class="opts" id="opts"></div>
+  <button class="small" id="prev">Zurück</button>
+</section>
+
+<section id="results" hidden>
+  <h1>Dein Ergebnis</h1>
+  <p class="lede" id="overall"></p>
+  <h2>Nach Bereich, schwächster zuerst</h2>
+  <div id="cats"></div>
+  <hr>
+  <button id="again">Noch einmal</button>
+</section>
+
+</div>
+
+<script>
+const CATS = [
+  { id:'adj',  de:'Adjektivendungen',            en:'adjective endings' },
+  { id:'vprp', de:'Verben mit Präpositionen',    en:'verbs with fixed prepositions' },
+  { id:'wprp', de:'Wechselpräpositionen',        en:'two-way prepositions' },
+  { id:'konn', de:'Konnektoren und Satzbau',     en:'connectors and clause order' },
+  { id:'perf', de:'Perfekt und Partizip',        en:'perfect tense and participles' },
+  { id:'pron', de:'Personalpronomen',            en:'personal pronouns' },
+  { id:'refl', de:'Reflexive Verben',            en:'reflexive verbs' },
+  { id:'modal',de:'Modalverben',                 en:'modal verbs' },
+  { id:'temp', de:'Temporale Konnektoren',       en:'temporal connectors' },
+  { id:'zu',   de:'Infinitiv mit zu',            en:'infinitive with zu' },
+  { id:'k2',   de:'Konjunktiv II',               en:'subjunctive II' },
+  { id:'pass', de:'Passiv',                      en:'passive voice' },
+  { id:'rel',  de:'Relativsätze',                en:'relative clauses' },
+  { id:'wort', de:'Wortstellung',                en:'word order' },
+  { id:'gen',  de:'Genitiv',                     en:'genitive case' },
+  { id:'komp', de:'Komparativ und Superlativ',   en:'comparative and superlative' }
+];
+
+/* w = Begründung; wird nicht angezeigt, steht aber im Datensatz. */
+const Q = [
+/* Adjektivendungen (9) */
+{c:'adj',s:['Ich habe gestern ',' Mantel gekauft.'],h:'ein · warm',a:'einen warmen',o:['einen warmen','einen warme','ein warmen','einem warmen'],w:'Akkusativ maskulin nach ein.'},
+{c:'adj',s:['Mit ',' Schuhen kann man gut wandern.'],h:'diese · bequem',a:'diesen bequemen',o:['diesen bequemen','diese bequemen','diesen bequemer','dieser bequemen'],w:'Dativ Plural, Adjektiv immer -en.'},
+{c:'adj',s:['',' Kaffee schmeckt mir am besten.'],h:'stark · ohne Artikel',a:'Starker',o:['Starker','Starken','Starkes','Starke'],w:'Ohne Artikel trägt das Adjektiv die Artikelendung.'},
+{c:'adj',s:['Das ist die Tasche ',' Kollegin.'],h:'meine · neu',a:'meiner neuen',o:['meiner neuen','meine neue','meinen neuen','meines neuen'],w:'Genitiv feminin.'},
+{c:'adj',s:['Wir wohnen in ',' Haus.'],h:'ein · alt',a:'einem alten',o:['einem alten','einen alten','ein altes','einem altem'],w:'in + Dativ; nach einem endet das Adjektiv auf -en.'},
+{c:'adj',s:['Sie trinkt gern ',' Tee.'],h:'grün · ohne Artikel',a:'grünen',o:['grünen','grüner','grünes','grüne'],w:'Akkusativ maskulin ohne Artikel.'},
+{c:'adj',s:['Ich suche ',' Wohnung.'],h:'eine · klein',a:'eine kleine',o:['eine kleine','einen kleinen','einer kleinen','eine kleinen'],w:'Akkusativ feminin.'},
+{c:'adj',s:['',' Kinder spielen im Garten.'],h:'die · klein',a:'Die kleinen',o:['Die kleinen','Die kleine','Die kleiner','Den kleinen'],w:'Nominativ Plural mit Artikel.'},
+{c:'adj',s:['Er ist ein Mann mit ',' Ideen.'],h:'viele · gut',a:'vielen guten',o:['vielen guten','viele gute','vielen guter','vieler guten'],w:'mit + Dativ Plural.'},
+
+/* Verben mit Präpositionen (7) */
+{c:'vprp',s:['Ich freue mich ',' deine Nachricht von gestern.'],h:'',a:'über',o:['über','auf','für','an'],w:'sich freuen über = etwas, das schon passiert ist.'},
+{c:'vprp',s:['Wir müssen uns ',' den Termin kümmern.'],h:'',a:'um',o:['um','für','an','über'],w:'sich kümmern um + Akkusativ.'},
+{c:'vprp',s:['Ich warte seit einer Stunde ',' den Bus.'],h:'',a:'auf',o:['auf','an','für','nach'],w:'warten auf + Akkusativ.'},
+{c:'vprp',s:['Das Ergebnis hängt ',' vielen Faktoren ab.'],h:'',a:'von',o:['von','an','mit','auf'],w:'abhängen von + Dativ.'},
+{c:'vprp',s:['Sie hat mich ',' Hochzeit eingeladen.'],h:'ihre',a:'zu ihrer',o:['zu ihrer','auf ihre','für ihre','an ihre'],w:'einladen zu + Dativ.'},
+{c:'vprp',s:['Mein Bruder hat Angst ',' Hunden.'],h:'',a:'vor',o:['vor','über','von','auf'],w:'Angst haben vor + Dativ.'},
+{c:'vprp',s:['Ich verlasse mich ',' dich.'],h:'',a:'auf',o:['auf','an','über','für'],w:'sich verlassen auf + Akkusativ.'},
+
+/* Wechselpräpositionen (8) */
+{c:'wprp',s:['Stell die Flasche bitte ',' Tisch.'],h:'',a:'auf den',o:['auf den','auf dem','an dem','auf der'],w:'stellen = Bewegung, wohin? → Akkusativ.'},
+{c:'wprp',s:['Das Bild hängt ',' Wand.'],h:'',a:'an der',o:['an der','an die','auf der','in der'],w:'hängen als Zustand, wo? → Dativ.'},
+{c:'wprp',s:['Die Katze springt ',' Sofa.'],h:'',a:'auf das',o:['auf das','auf dem','an das','in dem'],w:'Bewegung, wohin? → Akkusativ.'},
+{c:'wprp',s:['Wir treffen uns ',' Bahnhof.'],h:'',a:'am',o:['am','ans','an den','auf den'],w:'Ort, wo? → Dativ, an dem = am.'},
+{c:'wprp',s:['Leg das Buch bitte ',' Regal.'],h:'',a:'ins',o:['ins','im','in dem','an dem'],w:'legen = Bewegung → Akkusativ, in das = ins.'},
+{c:'wprp',s:['Der Schlüssel liegt ',' Tasche.'],h:'',a:'in der',o:['in der','in die','an der','auf die'],w:'liegen, wo? → Dativ.'},
+{c:'wprp',s:['Sie hat sich ',' Bett gelegt.'],h:'',a:'ins',o:['ins','im','in dem','an das'],w:'sich legen = Bewegung → Akkusativ.'},
+{c:'wprp',s:['Häng das Poster ',' Tür.'],h:'',a:'an die',o:['an die','an der','auf der','in die'],w:'hängen mit Bewegung, wohin? → Akkusativ.'},
+
+/* Konnektoren und Satzbau (8) */
+{c:'konn',s:['Ich bleibe heute zu Hause, ',' ich krank bin.'],h:'',a:'weil',o:['weil','denn','trotzdem','deshalb'],w:'Verb am Ende → Nebensatz.'},
+{c:'konn',s:['Es hat geregnet. ',' sind wir spazieren gegangen.'],h:'',a:'Trotzdem',o:['Trotzdem','Obwohl','Weil','Dass'],w:'Danach folgt sofort das Verb.'},
+{c:'konn',s:['Ich hoffe, ',' das Wetter morgen besser wird.'],h:'',a:'dass',o:['dass','das','ob','wenn'],w:'Nebensatz nach hoffen → dass.'},
+{c:'konn',s:['',' es stark regnete, gingen wir ins Kino.'],h:'',a:'Weil',o:['Weil','Denn','Deshalb','Trotzdem'],w:'regnete steht am Ende → Nebensatz.'},
+{c:'konn',s:['Ich weiß nicht, ',' er morgen kommt.'],h:'',a:'ob',o:['ob','wenn','wann','dass'],w:'Indirekte Ja/Nein-Frage.'},
+{c:'konn',s:['Sie hat schlecht geschlafen, ',' ist sie heute müde.'],h:'',a:'deshalb',o:['deshalb','weil','obwohl','dass'],w:'Nach dem Komma folgt sofort das Verb.'},
+{c:'konn',s:['',' es geregnet hat, sind wir schwimmen gegangen.'],h:'',a:'Obwohl',o:['Obwohl','Trotzdem','Deshalb','Denn'],w:'Verb am Ende → Nebensatz mit obwohl.'},
+{c:'konn',s:['Er kommt nicht heute, ',' erst morgen.'],h:'',a:'sondern',o:['sondern','aber','oder','denn'],w:'nicht …, sondern …'},
+
+/* Perfekt und Partizip (8) */
+{c:'perf',s:['Gestern ',' ich nach Berlin gefahren.'],h:'',a:'bin',o:['bin','habe','war','wurde'],w:'Ortsveränderung → Perfekt mit sein.'},
+{c:'perf',s:['Hast du den Film schon ','?'],h:'',a:'gesehen',o:['gesehen','gesieht','geseht','sehen'],w:'Unregelmäßiges Partizip II.'},
+{c:'perf',s:['Wir ',' lange auf dich gewartet.'],h:'',a:'haben',o:['haben','sind','waren','hatten'],w:'Kein Ortswechsel → Perfekt mit haben.'},
+{c:'perf',s:['Er ist heute sehr früh ','.'],h:'',a:'aufgestanden',o:['aufgestanden','aufstanden','gestanden auf','aufgestehen'],w:'Trennbares Verb: Präfix + ge + Stamm.'},
+{c:'perf',s:['Das Konzert hat pünktlich ','.'],h:'',a:'begonnen',o:['begonnen','begann','begonnt','gebegonnen'],w:'Verben mit be- bekommen kein ge-.'},
+{c:'perf',s:['Wir ',' gestern im Kino gewesen.'],h:'',a:'sind',o:['sind','haben','waren','wurden'],w:'sein bildet das Perfekt mit sein.'},
+{c:'perf',s:['Sie hat mir die Stadt ','.'],h:'',a:'gezeigt',o:['gezeigt','gezeight','zeigte','zeigen'],w:'Regelmäßiges Partizip II: ge + Stamm + t.'},
+{c:'perf',s:['Ich habe den Schlüssel ','.'],h:'',a:'verloren',o:['verloren','geverloren','verlort','verlieren'],w:'Verben mit ver- bekommen kein ge-.'},
+
+/* Personalpronomen (7) */
+{c:'pron',s:['Kannst du ',' bitte helfen?'],h:'ich',a:'mir',o:['mir','mich','ich','meiner'],w:'helfen + Dativ.'},
+{c:'pron',s:['Ich kenne ',' schon lange.'],h:'er',a:'ihn',o:['ihn','ihm','er','sein'],w:'kennen + Akkusativ.'},
+{c:'pron',s:['Das Buch gehört ','.'],h:'sie (Singular)',a:'ihr',o:['ihr','sie','ihrer','ihnen'],w:'gehören + Dativ.'},
+{c:'pron',s:['Ich habe ',' gestern angerufen.'],h:'ihr',a:'euch',o:['euch','ihr','euer','dich'],w:'anrufen + Akkusativ, 2. Person Plural.'},
+{c:'pron',s:['Wie geht es ','?'],h:'du',a:'dir',o:['dir','dich','du','deiner'],w:'Es geht + Dativ.'},
+{c:'pron',s:['Der Film hat ',' nicht gefallen.'],h:'wir',a:'uns',o:['uns','wir','unser','euch'],w:'gefallen + Dativ.'},
+{c:'pron',s:['Ich danke ',' für die Hilfe.'],h:'Sie',a:'Ihnen',o:['Ihnen','Sie','Ihr','euch'],w:'danken + Dativ, Höflichkeitsform.'},
+
+/* Reflexive Verben (7) */
+{c:'refl',s:['Ich wasche ',' die Hände.'],h:'',a:'mir',o:['mir','mich','mein','sich'],w:'Es gibt schon ein Akkusativobjekt → Dativ.'},
+{c:'refl',s:['Setz ',' bitte!'],h:'',a:'dich',o:['dich','dir','sich','du'],w:'sich setzen + Akkusativ.'},
+{c:'refl',s:['Wir treffen ',' um acht vor dem Kino.'],h:'',a:'uns',o:['uns','sich','euch','unser'],w:'1. Person Plural.'},
+{c:'refl',s:['Kannst du ',' das überhaupt vorstellen?'],h:'',a:'dir',o:['dir','dich','du','sich'],w:'sich etwas vorstellen = Dativ.'},
+{c:'refl',s:['Er hat ',' beim Sport den Arm gebrochen.'],h:'',a:'sich',o:['sich','ihm','ihn','seinen'],w:'3. Person immer sich.'},
+{c:'refl',s:['Interessierst du ',' für Geschichte?'],h:'',a:'dich',o:['dich','dir','sich','du'],w:'sich interessieren für + Akkusativ.'},
+{c:'refl',s:['Ich kann ',' an seinen Namen nicht erinnern.'],h:'',a:'mich',o:['mich','mir','mein','sich'],w:'sich erinnern an + Akkusativ.'},
+
+/* Modalverben (6) */
+{c:'modal',s:['Als Kind ',' ich nicht schwimmen.'],h:'können',a:'konnte',o:['konnte','kannte','könnte','gekonnt'],w:'Präteritum von können.'},
+{c:'modal',s:['Kinder unter 16 ',' diesen Film nicht sehen.'],h:'',a:'dürfen',o:['dürfen','müssen','mögen','sollen'],w:'Verbot → dürfen nicht.'},
+{c:'modal',s:['Du siehst müde aus. Du ',' ins Bett gehen.'],h:'',a:'solltest',o:['solltest','willst','darfst','magst'],w:'Ratschlag → sollte.'},
+{c:'modal',s:['Gestern ',' ich leider arbeiten.'],h:'müssen',a:'musste',o:['musste','müsste','gemusst','muss'],w:'Präteritum von müssen.'},
+{c:'modal',s:['Ich ',' gern einen Kaffee, bitte.'],h:'',a:'möchte',o:['möchte','musste','dürfte','sollte'],w:'Höflicher Wunsch → möchte.'},
+{c:'modal',s:['Das ',' nicht stimmen, das ist unmöglich.'],h:'',a:'kann',o:['kann','darf','soll','mag'],w:'Vermutung über Unmöglichkeit → kann nicht.'},
+
+/* Temporale Konnektoren (6) */
+{c:'temp',s:['',' ich klein war, wohnten wir in Köln.'],h:'',a:'Als',o:['Als','Wenn','Wann','Während'],w:'Einmalig in der Vergangenheit → als.'},
+{c:'temp',s:['',' ich Zeit habe, gehe ich schwimmen.'],h:'',a:'Wenn',o:['Wenn','Als','Wann','Ob'],w:'Wiederholung oder Gegenwart → wenn.'},
+{c:'temp',s:['Weißt du, ',' der Zug ankommt?'],h:'',a:'wann',o:['wann','wenn','als','ob'],w:'Indirekte Frage nach dem Zeitpunkt.'},
+{c:'temp',s:['',' wir losfahren, müssen wir noch tanken.'],h:'',a:'Bevor',o:['Bevor','Nachdem','Seitdem','Als'],w:'Das Tanken kommt zuerst.'},
+{c:'temp',s:['',' sie in Berlin wohnt, ist sie viel glücklicher.'],h:'',a:'Seitdem',o:['Seitdem','Bis','Bevor','Als'],w:'Beginn in der Vergangenheit, dauert an.'},
+{c:'temp',s:['Wir warten hier, ',' der Regen aufhört.'],h:'',a:'bis',o:['bis','seit','nachdem','während'],w:'Endpunkt → bis.'},
+
+/* Infinitiv mit zu (6) */
+{c:'zu',s:['Ich habe ganz vergessen, dich ','.'],h:'anrufen',a:'anzurufen',o:['anzurufen','zu anrufen','anrufen zu','anrufen'],w:'Bei trennbaren Verben steht zu in der Mitte.'},
+{c:'zu',s:['Du musst heute nicht ','.'],h:'arbeiten',a:'arbeiten',o:['arbeiten','zu arbeiten','gearbeitet','arbeitest'],w:'Nach Modalverben ohne zu.'},
+{c:'zu',s:['Es ist wichtig, jeden Tag ein bisschen ','.'],h:'üben',a:'zu üben',o:['zu üben','üben','geübt','übt'],w:'Es ist wichtig, … zu + Infinitiv.'},
+{c:'zu',s:['Sie hat mir geholfen, die Möbel ','.'],h:'tragen',a:'zu tragen',o:['zu tragen','tragen','getragen','trägt'],w:'Nach helfen mit Komma mit zu.'},
+{c:'zu',s:['Ich habe keine Lust, heute Abend ','.'],h:'ausgehen',a:'auszugehen',o:['auszugehen','ausgehen','zu ausgehen','ausgegangen'],w:'Trennbares Verb + zu.'},
+{c:'zu',s:['Ihr braucht nicht auf mich ','.'],h:'warten',a:'zu warten',o:['zu warten','warten','gewartet','wartet'],w:'brauchen mit zu + Infinitiv.'},
+
+/* Konjunktiv II (5) */
+{c:'k2',s:['',' Sie mir bitte kurz helfen?'],h:'',a:'Könnten',o:['Könnten','Konnten','Könntet','Könnet'],w:'Höfliche Bitte.'},
+{c:'k2',s:['Ich ',' gern ein Glas Wasser.'],h:'',a:'hätte',o:['hätte','habe','hatte','hättest'],w:'Höflicher Wunsch: ich hätte gern.'},
+{c:'k2',s:['Wenn ich mehr Zeit ',', würde ich mehr lesen.'],h:'',a:'hätte',o:['hätte','habe','hatte','hätten'],w:'Irrealer Bedingungssatz, 1. Person Singular.'},
+{c:'k2',s:['An deiner Stelle ',' ich mit dem Chef sprechen.'],h:'',a:'würde',o:['würde','werde','wurde','wäre'],w:'Ratschlag mit würde.'},
+{c:'k2',s:['Es ',' schön, wenn du mitkommen würdest.'],h:'',a:'wäre',o:['wäre','ist','war','sei'],w:'Irreale Höflichkeit.'},
+
+/* Passiv (5) */
+{c:'pass',s:['Das Haus ',' 1920 gebaut.'],h:'',a:'wurde',o:['wurde','worden','war','hat'],w:'Passiv Präteritum.'},
+{c:'pass',s:['Hier ',' nicht geraucht!'],h:'',a:'wird',o:['wird','ist','werden','wurde'],w:'Unpersönliches Passiv, Singular.'},
+{c:'pass',s:['Von wem ',' dieser Roman geschrieben?'],h:'',a:'wurde',o:['wurde','hat','ist','war'],w:'Passiv Präteritum.'},
+{c:'pass',s:['Die Fenster ',' gerade geputzt.'],h:'',a:'werden',o:['werden','sind','haben','worden'],w:'Vorgangspassiv Präsens Plural.'},
+{c:'pass',s:['Das Problem kann leicht ',' werden.'],h:'',a:'gelöst',o:['gelöst','lösen','zu lösen','löste'],w:'Modalverb + Partizip II + werden.'},
+
+/* Relativsätze (5) */
+{c:'rel',s:['Das ist der Mann, ',' mir geholfen hat.'],h:'',a:'der',o:['der','den','dem','dessen'],w:'Subjekt, maskulin Nominativ.'},
+{c:'rel',s:['Die Frau, ',' ich das Buch gegeben habe, ist Lehrerin.'],h:'',a:'der',o:['der','die','den','deren'],w:'geben + Dativ, feminin.'},
+{c:'rel',s:['Der Film, ',' wir gestern gesehen haben, war langweilig.'],h:'',a:'den',o:['den','der','dem','dessen'],w:'Akkusativobjekt, maskulin.'},
+{c:'rel',s:['Die Kollegen, mit ',' ich arbeite, sind sehr nett.'],h:'',a:'denen',o:['denen','den','die','deren'],w:'mit + Dativ Plural.'},
+{c:'rel',s:['Die Stadt, in ',' ich geboren bin, liegt im Süden.'],h:'',a:'der',o:['der','die','dem','denen'],w:'in + Dativ, feminin.'},
+
+/* Wortstellung (5) */
+{c:'wort',s:['Gestern ','.'],h:'Welche Fortsetzung ist richtig?',a:'ist er nach Hause gekommen',o:['ist er nach Hause gekommen','er ist nach Hause gekommen','er nach Hause gekommen ist','ist nach Hause er gekommen'],w:'Verb auf Position 2, dann das Subjekt.'},
+{c:'wort',s:['Ich kenne ','.'],h:'Welche Fortsetzung ist richtig?',a:'diesen Mann nicht',o:['diesen Mann nicht','nicht diesen Mann','diesen nicht Mann','nicht diesen Mann nicht'],w:'nicht steht hinter einem bestimmten Akkusativobjekt.'},
+{c:'wort',s:['Er hat ',' geschenkt.'],h:'beide Pronomen',a:'es mir',o:['es mir','mir es','mich ihm','ihm es'],w:'Akkusativ vor Dativ.'},
+{c:'wort',s:['Ich weiß, dass er morgen ','.'],h:'kommen · wollen',a:'kommen will',o:['kommen will','will kommen','will kommt','kommt will'],w:'Konjugiertes Verb am Ende des Nebensatzes.'},
+{c:'wort',s:['Weil ich sehr müde ',', gehe ich ins Bett.'],h:'sein',a:'bin',o:['bin','bin ich','ich bin','sein'],w:'Verb am Ende des weil-Satzes.'},
+
+/* Genitiv (4) */
+{c:'gen',s:['Wegen ',' Sturms fiel der Zug aus.'],h:'der Sturm',a:'des',o:['des','dem','der','den'],w:'wegen + Genitiv, maskulin.'},
+{c:'gen',s:['Während ',' Pause habe ich telefoniert.'],h:'die Pause',a:'der',o:['der','die','dem','den'],w:'während + Genitiv, feminin.'},
+{c:'gen',s:['Das ist das Auto ',' Bruders.'],h:'mein',a:'meines',o:['meines','meinem','meiner','meinen'],w:'Genitiv maskulin.'},
+{c:'gen',s:['Die Farbe ',' Hauses gefällt mir nicht.'],h:'das Haus',a:'des',o:['des','dem','der','das'],w:'Genitiv neutrum.'},
+
+/* Komparativ und Superlativ (4) */
+{c:'komp',s:['Mein Bruder ist ',' als ich.'],h:'groß',a:'größer',o:['größer','am größten','groß','mehr groß'],w:'Vergleich mit als → Komparativ.'},
+{c:'komp',s:['Das ist der ',' Tag des Jahres.'],h:'lang',a:'längste',o:['längste','längere','am längsten','längsten'],w:'Superlativ vor dem Nomen.'},
+{c:'komp',s:['Ich trinke ',' Kaffee als du.'],h:'viel',a:'mehr',o:['mehr','mehrere','viel','meisten'],w:'Komparativ von viel ist mehr.'},
+{c:'komp',s:['Von allen Läuferinnen ist sie ','.'],h:'schnell',a:'am schnellsten',o:['am schnellsten','die schnellere','am schnellste','schneller'],w:'Superlativ ohne Nomen.'}
+];
+
+let answers = new Array(Q.length).fill(null);
+let idx = 0;
+
+/* Ein angefangener Durchgang überlebt das Schließen des Tabs.
+   Fertige Durchgänge werden gelöscht, damit der Start sauber bleibt. */
+const KEY = 'de-diagnose';
+function save(){
+  try { localStorage.setItem(KEY, JSON.stringify({ n: Q.length, answers, idx })); } catch(e){}
+}
+function clearSaved(){
+  try { localStorage.removeItem(KEY); } catch(e){}
+}
+function loadSaved(){
+  try {
+    const d = JSON.parse(localStorage.getItem(KEY) || 'null');
+    if (!d || d.n !== Q.length || !Array.isArray(d.answers) || d.answers.length !== Q.length) return null;
+    const done = d.answers.filter(a => a !== null).length;
+    return (done > 0 && done < Q.length) ? d : null;
+  } catch(e){ return null; }
+}
+
+function shuffle(a){
+  a = a.slice();
+  for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; }
+  return a;
+}
+function prepare(){ Q.forEach(q => { q.opts = shuffle(q.o); }); }
+
+/* Fragen rotieren durch die Bereiche, damit gleiche Themen nicht hintereinander kommen. */
+const ORDER = (() => {
+  const groups = CATS.map(c => Q.map((q,i) => q.c === c.id ? i : -1).filter(i => i > -1));
+  const out = [];
+  for (let round = 0; out.length < Q.length; round++)
+    groups.forEach(g => { if (g[round] !== undefined) out.push(g[round]); });
+  return out;
+})();
+
+const $ = id => document.getElementById(id);
+const cur = () => ORDER[idx];
+const esc = t => String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+function show(name){ ['start','quiz','results'].forEach(s => $(s).hidden = (s !== name)); window.scrollTo({top:0}); }
+
+function renderQ(){
+  const q = Q[cur()];
+  $('count').textContent = 'Frage ' + (idx+1) + ' von ' + Q.length;
+  $('qfill').style.width = ((idx+1)/Q.length*100) + '%';
+  $('qtext').innerHTML = esc(q.s[0]) + '<span class="blank"></span>' + esc(q.s[1] || '');
+  $('qhint').textContent = q.h || '';
+  $('qhint').hidden = !q.h;
+
+  const box = $('opts');
+  box.innerHTML = '';
+  q.opts.forEach((o,i) => {
+    const b = document.createElement('button');
+    b.className = 'opt' + (answers[cur()] === o ? ' sel' : '');
+    b.innerHTML = '<span class="k">' + (i+1) + '</span>' + esc(o);
+    b.addEventListener('click', () => choose(o));
+    box.appendChild(b);
+  });
+  $('prev').disabled = idx === 0;
+}
+
+function choose(o){
+  answers[cur()] = o;
+  save();
+  renderQ();
+  setTimeout(() => {
+    if (idx < Q.length - 1){ idx++; save(); renderQ(); } else showResults();
+  }, 160);
+}
+
+function showResults(){
+  clearSaved();
+  const right = answers.filter((a,i) => a === Q[i].a).length;
+  $('overall').innerHTML = '<span class="big">' + right + '</span> <span class="meta">von ' + Q.length + ' richtig</span>';
+
+  const rows = CATS.map(c => {
+    const items = Q.map((q,i) => ({q,i})).filter(x => x.q.c === c.id);
+    const r = items.filter(x => answers[x.i] === x.q.a).length;
+    const pct = Math.round(r / items.length * 100);
+    return { c, r, total: items.length, pct, band: pct >= 80 ? 'solid' : (pct >= 60 ? 'shaky' : 'rusty') };
+  }).sort((a,b) => a.pct - b.pct);
+
+  const label = { rusty:'eingerostet', shaky:'wackelig', solid:'sitzt' };
+  $('cats').innerHTML = rows.map(e =>
+    '<div class="cat ' + e.band + '">' +
+      '<div class="nm">' + esc(e.c.de) + '<small>' + esc(e.c.en) + ' · ' + label[e.band] + '</small></div>' +
+      '<div class="sc">' + e.r + '/' + e.total + '</div>' +
+      '<div class="bar"><i style="width:' + e.pct + '%"></i></div>' +
+    '</div>'
+  ).join('');
+
+  show('results');
+}
+
+function start(){
+  answers = new Array(Q.length).fill(null);
+  idx = 0;
+  clearSaved();
+  prepare();
+  show('quiz');
+  renderQ();
+}
+
+function offerResume(){
+  const d = loadSaved();
+  $('resume').hidden = !d;
+  $('resumeInfo').hidden = !d;
+  if (d){
+    $('resumeInfo').textContent = d.answers.filter(a => a !== null).length +
+      ' von ' + Q.length + ' Fragen sind schon beantwortet.';
+    $('go').textContent = 'Neu starten';
+  } else {
+    $('go').textContent = 'Test starten';
+  }
+}
+
+$('go').addEventListener('click', start);
+$('again').addEventListener('click', start);
+$('prev').addEventListener('click', () => { if (idx > 0){ idx--; save(); renderQ(); } });
+$('resume').addEventListener('click', () => {
+  const d = loadSaved();
+  if (!d){ start(); return; }
+  answers = d.answers;
+  idx = Math.min(d.idx || 0, Q.length - 1);
+  show('quiz');
+  renderQ();
+});
+
+prepare();
+offerResume();
+show('start');
+
+if ('serviceWorker' in navigator){
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
+</script>
+</body>
+</html>

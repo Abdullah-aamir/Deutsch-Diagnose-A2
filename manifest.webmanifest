@@ -1,0 +1,18 @@
+{
+  "name": "Deutsch-Diagnose B1 — 100 Fragen",
+  "short_name": "DE-Diagnose",
+  "description": "100-Fragen-Diagnose für Deutsch B1: findet die schwachen Grammatikbereiche und schreibt die passenden Übungs-Prompts.",
+  "lang": "de",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#fbf9f4",
+  "theme_color": "#2f55a4",
+  "categories": ["education"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
